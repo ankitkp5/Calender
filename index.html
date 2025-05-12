@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>World Holiday Calendar</title>
+  
+  <link rel="stylesheet" href="cal.css">
+</head>
+<body>
+  <div class="container">
+    <h1>World Holiday Calendar</h1>
+    
+    <div id="selector">
+      <label for="monthSelect">Month:</label>
+      <select id="monthSelect"></select>
+
+      <label for="yearSelect">Year:</label>
+      <select id="yearSelect"></select>
+    </div>
+
+    <!-- Add month/year display -->
+    <div id="monthYearDisplay"></div>
+
+    <select id="countrySelect">
+      <option value="US">United States</option>
+      <option value="IN">India</option>
+      <option value="GB">United Kingdom</option>
+      <option value="JP">Japan</option>
+      <option value="FR">France</option>
+      <option value="DE">Germany</option>
+      <option value="BR">Brazil</option>
+      <option value="CA">Canada</option>
+      <option value="CN">China</option>
+    </select>
+
+   
+
+    <div id="calendar"></div>
+
+    <div id="loading" class="hidden">
+      <div class="spinner"></div> Loading holidays...
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
