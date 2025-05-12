@@ -15,7 +15,7 @@ const months = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-// Populate month dropdown
+// Populate dropdowns
 months.forEach((month, index) => {
   const option = document.createElement('option');
   option.value = index;
@@ -24,22 +24,18 @@ months.forEach((month, index) => {
   monthSelect.appendChild(option);
 });
 
-// Populate year dropdown (2000–2030)
 for (let y = 2000; y <= 2030; y++) {
   const option = document.createElement('option');
   option.value = y;
   option.textContent = y;
   if (y === currentYear) option.selected = true;
   yearSelect.appendChild(option);
-};
+}
 
-// Function to render the calendar with holidays
 const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
 
 const updateMonthYearDisplay = () => {
-  if (monthYearDisplay) {
-    monthYearDisplay.textContent = `${months[currentMonth]} ${currentYear}`;
-  }
+  monthYearDisplay.textContent = `${months[currentMonth]} ${currentYear}`;
 };
 
 const renderCalendar = (holidays = []) => {
@@ -76,19 +72,24 @@ const renderCalendar = (holidays = []) => {
 
     if (isHoliday) {
       dayDiv.classList.add('holiday');
-      dayDiv.innerHTML = `<strong>${i}</strong><br><span>${isHoliday.name}</span>
-        <div class="tooltip">${isHoliday.name}</div>`;
+      dayDiv.setAttribute('data-bs-toggle', 'tooltip');
+      dayDiv.setAttribute('title', isHoliday.name);
+      dayDiv.innerHTML = `<strong>${i}</strong><br><span>${isHoliday.name}</span>`;
     } else {
       dayDiv.textContent = i;
     }
 
     calendar.appendChild(dayDiv);
   }
+
+  // Activate tooltips
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
 };
 
 const getHolidays = async (countryCode) => {
-  loading.classList.remove('hidden');
-  const apiKey = 'MRUPYH43BBzKYSCGir6mZ07U842qubj9'; // Insert your API Key here
+  loading.classList.remove('d-none');
+  const apiKey = 'MRUPYH43BBzKYSCGir6mZ07U842qubj9';
   const url = `https://calendarific.com/api/v2/holidays?&api_key=${apiKey}&country=${countryCode}&year=${currentYear}`;
 
   try {
@@ -106,13 +107,13 @@ const getHolidays = async (countryCode) => {
     renderCalendar(holidays);
   } catch (error) {
     alert('❌ Error fetching holidays: ' + error.message);
-    renderCalendar(); // Render without holidays
+    renderCalendar();
   } finally {
-    loading.classList.add('hidden');
+    loading.classList.add('d-none');
   }
 };
 
-// Event Listeners
+// Event listeners
 monthSelect.addEventListener('change', () => {
   currentMonth = parseInt(monthSelect.value);
   updateCalendar();
@@ -129,14 +130,9 @@ countrySelect.addEventListener('change', (e) => {
 });
 
 function updateCalendar() {
-  if (selectedCountry === 'ALL') {
-    renderCalendar(); // blank holidays
-  } else {
-    getHolidays(selectedCountry);
-  }
+  getHolidays(selectedCountry);
 }
 
-// Initial load
 window.addEventListener('load', () => {
   getHolidays(selectedCountry);
 });
