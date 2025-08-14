@@ -66,3 +66,74 @@ h1 {
     min-height: 50px;
   }
 }
+
+
+/* Default desktop/tablet layout */
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+/* Calendar day cell */
+.day {
+  padding: 10px;
+  background: #e9ecef;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.9rem;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  word-wrap: break-word;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  #calendar {
+    font-size: 0.8rem;
+    grid-template-columns: repeat(7, minmax(30px, 1fr)); /* Flexible width */
+  }
+
+  .day {
+    padding: 6px;
+    min-height: 50px;
+    font-size: 0.75rem;
+  }
+
+  /* When holiday names are long, keep them readable */
+  .day.holiday span {
+    font-size: 0.65rem;
+    display: block;
+    margin-top: 2px;
+    word-break: break-word;
+  }
+
+  /* Form controls stack vertically for mobile */
+  .row.g-3 > div {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  #calendar {
+    grid-template-columns: repeat(7, minmax(25px, 1fr));
+  }
+
+  .day {
+    padding: 4px;
+    min-height: 40px;
+    font-size: 0.7rem;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+}
